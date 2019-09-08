@@ -250,7 +250,7 @@ As we know that it is Time Series problem we cannot randomize the data, 70% data
 
 Then we used "Triple Exponential Smoothing" and then again train on Random Forest and XGBOOST.
 
-<br>Random Forest MAPE: 0.04657 </br>
+Random Forest MAPE: 0.04657
 <br> XGBoost MAPE : 0.02932 </br>
 # Conclusion
 
