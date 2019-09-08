@@ -240,18 +240,18 @@ As we know that it is Time Series problem we cannot randomize the data, 70% data
 
 # Machine Learning Models
 
-Exponential Model MAPE : 0.1349
-Liner Regression MAPE : 0.13468
-Random Forest MAPE: 0.13438
-XGBoost MAPE : 0.1392
+<br> Exponential Model MAPE : 0.1349 </br>
+<br> Liner Regression MAPE : 0.13468 </br>
+<br> Random Forest MAPE: 0.13438 </br>
+<br> XGBoost MAPE : 0.1392 </br>
 
 # Feature Engineering
 **Holt Winter forecasting**
 
 Then we used "Triple Exponential Smoothing" and then again train on Random Forest and XGBOOST.
 
-Random Forest MAPE: 0.04657
-XGBoost MAPE : 0.02932
+<br>Random Forest MAPE: 0.04657 </br>
+<br> XGBoost MAPE : 0.02932 </br>
 # Conclusion
 
 - Holt-Winter forecasting, triple exponential forecasting is tremendous feature for this task. Even hyperparam tunig in holt winter is also crucial. It reduce MAPE to 0.02 which is brillint.
