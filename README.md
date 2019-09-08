@@ -3,24 +3,287 @@
 
 
 
+Source: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
-Predicting the demand for taxi in a interval of 10 minute
-Requirements
+The data used in the attached datasets were collected and provided to the NYC Taxi and Limousine Commission (TLC)
+Note we have consider 2016 dataset. We have experimented on Jan 2016, Feb 2016 and March 2016 datasets.
 
-Python-3.6.0
+## Information on taxis:
 
-numpy--1.15.0
+<h5> Yellow Taxi: Yellow Medallion Taxicabs</h5>
+<p> These are the famous NYC yellow taxis that provide transportation exclusively through street-hails. The number of taxicabs is limited by a finite number of medallions issued by the TLC. You access this mode of transportation by standing in the street and hailing an available taxi with your hand. The pickups are not pre-arranged.</p>
 
-pandas--0.18.1
+<h5> For Hire Vehicles (FHVs) </h5>
+<p> FHV transportation is accessed by a pre-arrangement with a dispatcher or limo company. These FHVs are not permitted to pick up passengers via street hails, as those rides are not considered pre-arranged. </p>
 
-scikit-learn--0.19.0
+<h5> Green Taxi: Street Hail Livery (SHL) </h5>
+<p>  The SHL program will allow livery vehicle owners to license and outfit their vehicles with green borough taxi branding, meters, credit card machines, and ultimately the right to accept street hails in addition to pre-arranged rides. </p>
+<p> Credits: Quora</p>
 
-dask--0.18.2
+<h5>Footnote:</h5>
+In the given notebook we are considering only the yellow taxis for the time period between Jan - Mar 2015 & Jan - Mar 2016
 
-I have collected the data from http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml and can downloaded easily.
 
-As pandas reads sequentially and requires a lot of ram for reading large csv files. So, I used Dask as it can be parallelized and is faster than pandas.
+# Data Collection
+We Have collected all yellow taxi trips data from jan-2015 to dec-2016(Will be using only 2015 data)
+<table>
+<tr>
+<th> file name </th>
+<th> file name size</th>
+<th> number of records </th>
+<th> number of features </th>
+</tr>
+<tr>
+<td> yellow_tripdata_2016-01 </td>
+<td> 1. 59G </td>
+<td> 10906858 </td>
+<td> 19 </td>
+</tr>
 
-After the preprocsessing, trained a window based simple model and then trained various Regression models such as Random-Forest and XGBoost for reducing MAPE to less than 13%.
+<tr>
+<td> yellow_tripdata_2016-02 </td>
+<td> 1. 66G </td>
+<td> 11382049 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2016-03 </td>
+<td> 1. 78G </td>
+<td> 12210952 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2016-04 </td>
+<td> 1. 74G </td>
+<td> 11934338 </td>
+<td> 19 </td>
+</tr>
 
-Concluding, I would say that the simple moving window model and its variants performed quite well and were very close to Regression models in terms of reducing MAPE.
+<tr>
+<td> yellow_tripdata_2016-05 </td>
+<td> 1. 73G </td>
+<td> 11836853 </td>
+<td> 19 </td>
+</tr>
+
+<tr>
+<td> yellow_tripdata_2016-06 </td>
+<td> 1. 62G </td>
+<td> 11135470 </td>
+<td> 19 </td>
+</tr>
+
+<tr>
+<td> yellow_tripdata_2016-07 </td>
+<td> 884Mb </td>
+<td> 10294080 </td>
+<td> 17 </td>
+</tr>
+
+<tr>
+<td> yellow_tripdata_2016-08 </td>
+<td> 854Mb </td>
+<td> 9942263 </td>
+<td> 17 </td>
+</tr>
+
+<tr>
+<td> yellow_tripdata_2016-09 </td>
+<td> 870Mb </td>
+<td> 10116018 </td>
+<td> 17 </td>
+</tr>
+
+<tr>
+<td> yellow_tripdata_2016-10 </td>
+<td> 933Mb </td>
+<td> 10854626 </td>
+<td> 17 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2016-11 </td>
+<td> 868Mb </td>
+<td> 10102128 </td>
+<td> 17 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2016-12 </td>
+<td> 897Mb </td>
+<td> 10449408 </td>
+<td> 17 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-01 </td>
+<td> 1.84Gb </td>
+<td> 12748986 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-02 </td>
+<td> 1.81Gb </td>
+<td> 12450521 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-03 </td>
+<td> 1.94Gb </td>
+<td> 13351609 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-04 </td>
+<td> 1.90Gb </td>
+<td> 13071789 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-05 </td>
+<td> 1.91Gb </td>
+<td> 13158262 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-06 </td>
+<td> 1.79Gb </td>
+<td> 12324935 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-07 </td>
+<td> 1.68Gb </td>
+<td> 11562783 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-08 </td>
+<td> 1.62Gb </td>
+<td> 11130304 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-09 </td>
+<td> 1.63Gb </td>
+<td> 11225063 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-10 </td>
+<td> 1.79Gb </td>
+<td> 12315488 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-11 </td>
+<td> 1.65Gb </td>
+<td> 11312676 </td>
+<td> 19 </td>
+</tr>
+<tr>
+<td> yellow_tripdata_2015-12 </td>
+<td> 1.67Gb </td>
+<td> 11460573 </td>
+<td> 19 </td>
+</tr>
+</table>
+
+#### Problem statement :
+
+Predicting Taxi Demand in New York city for future 10 minutes
+# ML Problem Formulation
+<p><b> Time-series forecasting and Regression</b></p>
+<br>
+-<i> To find number of pickups, given location cordinates(latitude and longitude) and time, in the query reigion and surrounding regions.</i>
+<p> 
+To solve the above we would be using data collected in Jan - Mar 2015 to predict the pickups in Jan - Mar 2016.
+</p>
+
+
+# Performance metrics
+1. Mean Absolute percentage error.
+2. Mean Squared error.
+
+## Data Cleaning
+
+All below points has outlier's points
+
+1. Pickup Latitude and Pickup Longitude
+2. Dropoff Latitude & Dropoff Longitude
+3. Trip Durations
+4. Speed
+5. Trip Distance
+6. Total Fare
+
+When we plot BoxCox plot we observe outliers in above column so we simply remove those outliers
+
+## Data Preprocess
+#### Segmentation
+
+We divide whole city into 40 parts and segmentation was done depends on no of frequecy for taxi demand. If certain segment has more numbers of trips then area of that segment is relatively small, if numbers of trip are less then area of that segment is large. 
+
+We has used KMeans algorithm for segmentation of  whole new york city.
+
+### Time Bin
+As we divided whole city into segments, we also have divided time bin into parts.
+
+### Baseline Model
+As we know that we are dealing with time series data. we have to consider statistic terminological based model.
+
+1. Simple Moving Average
+2. Weighted Moving Average
+3. Exponential Weighted Moving Averages
+
+
+
+##  Train and Test Datasets
+As we know that it is Time Series problem we cannot randomize the data, 70% data will use for training and 30% data we will use as test data.
+
+
+# Machine Learning Models
+##  Base Line Model
+### Naive Bayes
+Log Loss : 1.153235894590452
+Number of missclassified point : 0.38345864661654133
+
+##  K Nearest Neighbour Classification
+Log loss : 1.0324353214410276
+Number of mis-classified points : 0.36466165413533835
+
+###  Logistic Regression
+###  With Class balancing
+Log loss : 1.043318050124558
+Number of mis-classified points : 0.3458646616541353
+###  Without Class balancing
+Log loss : 1.062988230671672
+Number of mis-classified points : 0.3533834586466165
+##  Linear Support Vector Machines
+Log loss : 1.076836039361882
+Number of mis-classified points : 0.3458646616541353
+##  Random Forest Classifier
+### Hyper paramter tuning (With One hot Encoding)
+Log loss : 1.1978667267936522
+Number of mis-classified points : 0.39473684210526316
+###  Hyper paramter tuning (With Response Coding)
+Log loss : 1.3352069773071837
+Number of mis-classified points : 0.4943609022556391
+
+##  Stack the models
+Log loss (train) on the stacking classifier : 0.5386754023282136
+Log loss (CV) on the stacking classifier : 1.138717562146062
+Log loss (test) on the stacking classifier : 1.1742087492677697
+Number of missclassified point : 0.38646616541353385
+
+### Maximum Voting classifier
+Log loss (train) on the VotingClassifier : 0.8329702627479129
+Log loss (CV) on the VotingClassifier : 1.1887678593349613
+Log loss (test) on the VotingClassifier : 1.2061284826287209
+Number of missclassified point : 0.3849624060150376
+
+# Logistic regression with CountVectorizer Features, including both unigrams and bigrams
+Log loss : 1.1025061826224287
+Number of mis-classified points : 0.36278195488721804
+
+# adding Variation Feature,Text Feature to improve the performance
+Log loss : 0.9976654523552164
+Number of mis-classified points : 0.3233082706766917
+# Conclusion
+After some feature engineering we manage to decrease the log loss below < 1. We can adopt more feature enginnering methods and reduce the log loss furhermore.
