@@ -2,11 +2,13 @@
 ![NYC Taxi](http://www.nyc.gov/html/tlc/images/features/fi_about_photo_trip_records.png)
 
 
-
 Source: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
 The data used in the attached datasets were collected and provided to the NYC Taxi and Limousine Commission (TLC)
 Note we have consider 2016 dataset. We have experimented on Jan 2016, Feb 2016 and March 2016 datasets.
+
+## Medium Blog:
+https://medium.com/@passionatedevs/taxi-demand-prediction-on-time-series-data-with-holt-winter-forecasting-loss-0-02-2bcdeec48499
 
 ## Information on taxis:
 
